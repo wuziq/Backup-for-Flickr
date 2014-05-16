@@ -14,28 +14,38 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.wuziq.flickrsync.LoginActivity"
-            android:label="@string/title_activity_main" >
+            android:name="com.wuziq.flickrsync.MainActivity"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- singleTask so that when browser fires a LoginActivity intent, the system will reuse the existing activity -->
+        <activity
+            android:name="com.wuziq.flickrsync.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
     </application>
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- TODO:  not sure whether I need these yet... -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />

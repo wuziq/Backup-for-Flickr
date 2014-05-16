@@ -5,7 +5,6 @@ import com.googlecode.flickrjandroid.Flickr;
 import com.googlecode.flickrjandroid.oauth.OAuth;
 import com.googlecode.flickrjandroid.oauth.OAuthInterface;
 import com.wuziq.flickrsync.FlickrHelper;
-import com.wuziq.flickrsync.GetAccessTokenCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +15,9 @@ public class GetAccessTokenTask extends AsyncTask<String, Integer, OAuth>
 {
     private static final Logger logger = LoggerFactory.getLogger( GetAccessTokenTask.class );
 
-    private GetAccessTokenCallback m_callback;
+    private IGetAccessTokenCallback m_callback;
 
-    public GetAccessTokenTask( GetAccessTokenCallback callback )
+    public GetAccessTokenTask( IGetAccessTokenCallback callback )
     {
         super();
         this.m_callback = callback;

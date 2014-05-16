@@ -56,9 +56,10 @@ public class Preferences
         String userId = sp.getString( KEY_USER_ID,
                                       null );
 
+        // TODO:  why aren't both token string and token secret saved upon receipt of request token?  why only secret?
         OAuthToken oauthToken = null;
         if (    null == oauthTokenString
-             || null == tokenSecret )
+             && null == tokenSecret )
         {
             logger.warn( "No OAuth token was found." );
         }

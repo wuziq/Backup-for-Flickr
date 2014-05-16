@@ -125,8 +125,10 @@ public class GetRequestTokenTask extends AsyncTask<Void, Integer, String>
         }
         if ( result != null && ! result.startsWith( "error" ) )
         {
-            m_ctx.startActivity( new Intent( Intent.ACTION_VIEW,
-                                             Uri.parse( result ) ) );
+            Intent intent = new Intent( Intent.ACTION_VIEW,
+                                        Uri.parse( result ) );
+            intent.setFlags( Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS );
+            m_ctx.startActivity( intent );
         }
         else
         {
