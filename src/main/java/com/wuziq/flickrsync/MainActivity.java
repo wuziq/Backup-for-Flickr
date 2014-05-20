@@ -9,30 +9,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.R;
+import com.google.inject.Inject;
+import com.wuziq.flickrsync.authentication.IAuthenticationChecker;
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 
-public class MainActivity extends Activity
+public class MainActivity extends RoboActivity
 {
     private static final int REQUESTCODE_LOGIN_ACTIVITY_EXITED = 1;
 
+    @InjectView( R.id.button_takephotos )
     private Button m_buttonTakePhotos;
+
+    @InjectView( R.id.button_sync )
     private Button m_buttonSync;
+
+    @InjectView( R.id.button_viewuploaded )
     private Button m_buttonViewUploaded;
+
+    @Inject
+    private IAuthenticationChecker m_authChecker;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
-
-        m_buttonTakePhotos = (Button)findViewById( R.id.button_takephotos );
-        m_buttonSync = (Button)findViewById( R.id.button_sync );
-        m_buttonViewUploaded = (Button)findViewById( R.id.button_viewuploaded );
     }
 
     @Override
     public boolean onCreateOptionsMenu( Menu menu )
     {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.main,
                                    menu );
