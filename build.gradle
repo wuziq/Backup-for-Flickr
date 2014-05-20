@@ -21,10 +21,13 @@ apply plugin: 'android-test'
 
 android {
     dependencies {
-        compile group:  'com.googlecode.flickrj-android', name:  'flickrj-android', version:  '2.0.8'
-        compile 'org.slf4j:slf4j-api:1.7.7'
-        compile 'com.google.inject:guice:3.0:no_aop'
-        compile 'org.roboguice:roboguice:2.0'
+        compile 'com.googlecode.flickrj-android:flickrj-android:2.0.8',
+                'org.slf4j:slf4j-api:1.7.7'
+        compile('org.roboguice:roboguice:2.0')
+        {
+            exclude module: 'asm'
+        }
+
     }
     packagingOptions {
         exclude 'LICENSE.txt'
@@ -70,7 +73,6 @@ dependencies {
     // The Google Repository (separate from the corresponding library) can be found in the Extras category.
     // compile 'com.google.android.gms:play-services:4.2.42'
     compile 'com.android.support:appcompat-v7:19.+'
-    //compile 'com.googlecode.jmockit:jmockit:1.7'
     repositories {
         mavenCentral()
         maven {
@@ -83,7 +85,8 @@ dependencies {
             'com.squareup.dagger:dagger:1.1.0',
             'org.hamcrest:hamcrest-integration:1.1',
             'org.hamcrest:hamcrest-core:1.1',
-            'org.hamcrest:hamcrest-library:1.1'
+            'org.hamcrest:hamcrest-library:1.1',
+            'org.roboguice:roboguice:2.0'
 
     androidTestCompile('junit:junit:4.11') {
         exclude module: 'hamcrest-core'
