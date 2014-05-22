@@ -44,6 +44,7 @@ public class TestFlickrSyncApplication extends FlickrSyncApplication implements
         List<Object> objects = new ArrayList<Object>();
         for ( Field field : declaredFields )
         {
+            // TODO:  get jmockit mocks to work
             if (    field.getAnnotation( Mock.class ) != null
                  || field.getAnnotation( Mocked.class ) != null )
             {
@@ -56,11 +57,15 @@ public class TestFlickrSyncApplication extends FlickrSyncApplication implements
 
     private void setUpRoboguice( Object test, List<Object> objects )
     {
-        RoboGuice.setBaseApplicationInjector( Robolectric.application,
-                                              RoboGuice.DEFAULT_STAGE,
-                                              Modules.override( RoboGuice.newDefaultRoboModule( Robolectric.application ) ).with( new MyRoboModule( objects ) ) );
+        TestFlickrSyncApplication application = (TestFlickrSyncApplication)Robolectric.application;
 
-        RoboGuice.injectMembers( Robolectric.application, test );
+        RoboGuice.setBaseApplicationInjector( application,
+                                              RoboGuice.DEFAULT_STAGE,
+                                              RoboGuice.newDefaultRoboModule( application ),
+                                              new MyRoboModule( objects ) );
+
+        RoboGuice.getInjector( application )
+                 .injectMembers( test );
     }
 
     public static class MyRoboModule extends AbstractModule
@@ -77,8 +82,15 @@ public class TestFlickrSyncApplication extends FlickrSyncApplication implements
         {
             for ( final Object mock : mocksToInject )
             {
-                Class clazz = mock.getClass();
-                bind( clazz.getSuperclass() ).toInstance( mock );
+                Class mockedClass = mock.getClass();
+                Class[] interfaces = mockedClass.getInterfaces();
+                for ( Class myInterface : interfaces )
+                {
+                    if ( myInterface.getName().contains( "wuziq" ) )
+                    {
+                        bind( myInterface ).toInstance( mock );
+                    }
+                }
             }
         }
     }

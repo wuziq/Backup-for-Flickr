@@ -27,7 +27,7 @@ public class MainActivity extends RoboActivity
     private Button m_buttonViewUploaded;
 
     @Inject
-    private IAuthenticationChecker m_authChecker;
+    private IUploader m_uploader;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -66,9 +66,12 @@ public class MainActivity extends RoboActivity
         case R.id.button_takephotos:
             break;
         case R.id.button_sync:
+            m_uploader.doUpload();
+            /*
             Intent intent = new Intent( this,
                                         LoginActivity.class );
             startActivity( intent );
+            */
             break;
         case R.id.button_viewuploaded:
             break;
