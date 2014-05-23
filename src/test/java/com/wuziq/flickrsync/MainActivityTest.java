@@ -14,10 +14,10 @@ import org.robolectric.RobolectricTestRunner;
  * Created by wuziq on 5/17/2014.
  */
 @RunWith( RobolectricTestRunner.class )
-public class MainActivityTests
+public class MainActivityTest
 {
     @Mock
-    IUploader m_mockUploader;
+    private IUploader m_mockUploader;
 
     @Test
     public void onClick_upload_performsDoUpload()
@@ -27,7 +27,7 @@ public class MainActivityTests
 
         buttonSync.performClick();
 
-        Mockito.verify( m_mockUploader ).doUpload();
+        Mockito.verify( m_mockUploader ).prepareUpload();
     }
 
     private static Activity getNewMainActivity()

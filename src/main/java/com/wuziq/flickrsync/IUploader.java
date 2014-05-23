@@ -5,5 +5,7 @@ package com.wuziq.flickrsync;
  */
 public interface IUploader
 {
+    void prepareUpload();
+
     void doUpload();
 }

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.R;
 import com.google.inject.Inject;
-import com.wuziq.flickrsync.authentication.IAuthenticationChecker;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
@@ -66,7 +65,7 @@ public class MainActivity extends RoboActivity
         case R.id.button_takephotos:
             break;
         case R.id.button_sync:
-            m_uploader.doUpload();
+            m_uploader.prepareUpload();
             /*
             Intent intent = new Intent( this,
                                         LoginActivity.class );
