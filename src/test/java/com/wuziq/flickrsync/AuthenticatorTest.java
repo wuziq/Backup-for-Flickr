@@ -5,6 +5,7 @@ import com.googlecode.flickrjandroid.Transport;
 import com.googlecode.flickrjandroid.oauth.OAuth;
 import com.googlecode.flickrjandroid.oauth.OAuthInterface;
 import com.googlecode.flickrjandroid.oauth.OAuthToken;
+import com.wuziq.flickrsync.exceptions.AuthenticationException;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Assert;
@@ -15,7 +16,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by wuziq on 5/22/2014.
@@ -35,7 +37,7 @@ public class AuthenticatorTest
     }
 
     @Test
-    public void authenticator_accessTokenExists_getAccessTokenReturnsAccessToken()
+    public void authenticator_accessTokenExists_getAccessTokenReturnsAccessToken() throws IOException, FlickrException, AuthenticationException
     {
         when( m_mockPreferences.getAccessToken() ).thenReturn( "test access token" );
         when( m_mockPreferences.getAccessTokenSecret() ).thenReturn( "test access token secret" );
@@ -51,7 +53,7 @@ public class AuthenticatorTest
     }
 
     @Test
-    public void authenticator_accessTokenDoesNotExistButRequestTokenExists_accessTokenRequestedAndReturned() throws IOException, FlickrException
+    public void authenticator_accessTokenDoesNotExistButRequestTokenExists_accessTokenRequestedAndReturned() throws IOException, FlickrException, AuthenticationException
     {
         when( m_mockPreferences.getAccessToken() ).thenReturn( null );
         when( m_mockPreferences.getAccessTokenSecret() ).thenReturn( null );
@@ -97,5 +99,32 @@ public class AuthenticatorTest
         verify( m_mockPreferences ).getOAuthVerifier();
         verify( m_mockPreferences ).setAccessToken( "test access token" );
         verify( m_mockPreferences ).setAccessTokenSecret( "test access token secret" );
+    }
+
+    @Test
+    public void authenticator_accessTokenAndRequestTokenDoNotExist_throwsNeedsUserAuthorizationAuthenticationException() throws IOException, FlickrException
+    {
+        when( m_mockPreferences.getAccessToken() ).thenReturn( null );
+        when( m_mockPreferences.getAccessTokenSecret() ).thenReturn( null );
+        when( m_mockPreferences.getRequestToken() ).thenReturn( null );
+        when( m_mockPreferences.getRequestTokenSecret() ).thenReturn( null );
+        when( m_mockPreferences.getOAuthVerifier() ).thenReturn( null );
+
+        IAuthenticator authenticator = getNewAuthenticator();
+        OAuthToken oAuthToken = null;
+        try
+        {
+            oAuthToken = authenticator.getAccessToken();
+        }
+        catch ( AuthenticationException e )
+        {
+            Assert.assertEquals( AuthenticationException.Type.NEEDS_USER_AUTHORIZATION,
+                                 e.getType() );
+            Assert.assertEquals( null,
+                                 oAuthToken );
+            return;
+        }
+
+        Assert.assertTrue( false );
     }
 }
