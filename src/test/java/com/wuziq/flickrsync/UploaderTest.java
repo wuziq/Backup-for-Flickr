@@ -19,16 +19,14 @@ public class UploaderTest
     private class FakeAuthenticator implements IAuthenticator
     {
         @Override
-        public OAuth getAccessToken()
+        public OAuthToken getAccessToken()
         {
             OAuthToken accessToken = new OAuthToken();
             accessToken.setOauthToken( "test token" );
             accessToken.setOauthTokenSecret( "test secret" );
-            OAuth oAuth = new OAuth();
-            oAuth.setToken( accessToken );
 
             m_wasCalledAsynchronously = true;
-            return oAuth;
+            return accessToken;
         }
 
         @Override

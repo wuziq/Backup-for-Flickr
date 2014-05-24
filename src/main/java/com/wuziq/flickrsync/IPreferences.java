@@ -20,4 +20,8 @@ public interface IPreferences
     String getAccessToken();
 
     String getAccessTokenSecret();
+
+    void setAccessToken( String oauthToken );
+
+    void setAccessTokenSecret( String oauthTokenSecret );
 }

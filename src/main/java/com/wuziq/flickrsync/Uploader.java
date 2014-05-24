@@ -3,6 +3,7 @@ package com.wuziq.flickrsync;
 import android.os.AsyncTask;
 import com.google.inject.Inject;
 import com.googlecode.flickrjandroid.oauth.OAuth;
+import com.googlecode.flickrjandroid.oauth.OAuthToken;
 
 /**
  * Created by wuziq on 5/21/2014.
@@ -31,16 +32,16 @@ public class Uploader implements IUploader
         // TODO:  implement
     }
 
-    private class GetAccessTokenAsyncTask extends AsyncTask<Void, Void, OAuth>
+    private class GetAccessTokenAsyncTask extends AsyncTask<Void, Void, OAuthToken>
     {
         @Override
-        protected OAuth doInBackground( Void... voids )
+        protected OAuthToken doInBackground( Void... voids )
         {
             return m_authenticator.getAccessToken();
         }
 
         @Override
-        protected void onPostExecute( OAuth oAuth )
+        protected void onPostExecute( OAuthToken oAuthToken )
         {
             // TODO:  implement
         }

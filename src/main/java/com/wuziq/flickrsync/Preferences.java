@@ -151,4 +151,28 @@ public class Preferences implements IPreferences
                              null );
     }
 
+    @Override
+    public void setAccessToken( String accessToken )
+    {
+        Context ctx = FlickrSyncApplication.getContext();
+        SharedPreferences sp = ctx.getSharedPreferences( PREFS_NAME,
+                                                         Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString( KEY_ACCESS_TOKEN,
+                          accessToken );
+        editor.commit();
+    }
+
+    @Override
+    public void setAccessTokenSecret( String accessTokenSecret )
+    {
+        Context ctx = FlickrSyncApplication.getContext();
+        SharedPreferences sp = ctx.getSharedPreferences( PREFS_NAME,
+                                                         Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString( KEY_ACCESS_TOKEN_SECRET,
+                          accessTokenSecret );
+        editor.commit();
+    }
+
 }
